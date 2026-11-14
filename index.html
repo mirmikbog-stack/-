@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Твоё послание</title>
+<style>
+:root{--pink:#ff7eae;--bg:#100911;--muted:#bba9b7}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% 42%,#35152d 0%,#170d19 42%,#09070b 100%);color:#f8eaf2;font-family:Georgia,serif;min-height:100vh;overflow-x:hidden}
+main{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:26px 16px;position:relative}
+main:before,main:after{content:"";position:fixed;width:260px;height:260px;border:1px solid #ff8fbd33;border-radius:50%;filter:blur(1px);animation:pulse 5s ease-in-out infinite;pointer-events:none}
+main:after{width:360px;height:360px;animation-delay:1.5s}
+@keyframes pulse{0%,100%{transform:scale(.8);opacity:.1}50%{transform:scale(1.2);opacity:.55}}
+.card{width:min(420px,100%);text-align:center;position:relative;z-index:1}
+.eyebrow{font:11px Arial,sans-serif;letter-spacing:4px;color:#d8a8c4;text-transform:uppercase;margin-bottom:28px}
+.envelope{width:180px;height:118px;margin:0 auto 25px;position:relative;background:linear-gradient(145deg,#fff0f5,#d9c5d0);border-radius:8px;box-shadow:0 12px 45px #ff8ab544;cursor:pointer;transition:.5s}
+.envelope:before{content:"";position:absolute;inset:0;background:linear-gradient(35deg,transparent 49%,#c5aab9 50%,transparent 51%),linear-gradient(-35deg,transparent 49%,#d0b6c4 50%,transparent 51%);border-radius:8px}
+.flap{position:absolute;top:0;left:0;width:0;height:0;border-left:90px solid transparent;border-right:90px solid transparent;border-top:70px solid #f7e6ee;transform-origin:top;transition:.7s;z-index:2}
+.seal{position:absolute;z-index:3;left:50%;top:48px;transform:translateX(-50%);width:27px;height:27px;border-radius:50%;background:#c94d79;box-shadow:0 0 16px #ff7eae99}
+.seal:after{content:"♥";font:14px Arial;color:#ffe6ef;position:absolute;left:7px;top:6px}
+.envelope.open .flap{transform:rotateX(180deg);opacity:.25}
+h1{font-size:27px;font-weight:normal;margin:0 0 12px}
+p{color:#d5c0ce;line-height:1.65;font-size:15px}
+button,.linkbtn{border:0;border-radius:30px;padding:13px 26px;background:linear-gradient(90deg,#ff8ab5,#e85c99);color:#35101f;font-weight:bold;letter-spacing:.3px;box-shadow:0 5px 25px #ff75a855;cursor:pointer;text-decoration:none;display:inline-block;margin:10px 5px}
+button:active{transform:scale(.98)}
+#letter{display:none;animation:rise .9s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.portrait-wrap{width: min(270px,78vw);height:340px;margin:24px auto 18px;position:relative;overflow:hidden;border-radius:7px;box-shadow:0 0 35px #ff83b344}
+.portrait-wrap img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.15) brightness(.82);display:block}
+.portrait-wrap:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,#fff0 0 3px,#fff2 4px 5px);mix-blend-mode:screen;pointer-events:none}
+.caption{font-style:italic;color:#f4c8dc;font-size:20px;margin:14px 0 5px}
+.small{font:11px Arial,sans-serif;color:#a78c9e;letter-spacing:1px}
+#stars{position:fixed;inset:0;pointer-events:none;opacity:.6;background-image:radial-gradient(#fff 1px,transparent 1px),radial-gradient(#f6a9d0 1px,transparent 1px);background-size:83px 83px,127px 127px;background-position:0 0,30px 40px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<main><section class="card">
+  <div id="intro">
+    <div class="eyebrow">маленькое послание</div>
+    <div class="envelope" id="env" aria-label="Конверт"><div class="flap"></div><div class="seal"></div></div>
+    <h1>Для тебя</h1>
+    <p>Здесь спрятано кое-что особенное.<br>Нажми, чтобы открыть.</p>
+    <button id="open">Открыть письмо</button>
+  </div>
+  <div id="letter">
+    <div class="eyebrow">это послание для тебя</div>
+    <div class="portrait-wrap"><img src="portrait.jpg" alt="Фотография"></div>
+    <div class="caption">Ты — особенный человек</div>
+    <p>Пусть у тебя будет больше светлых моментов,<br>искренних улыбок и причин радоваться каждому дню.</p>
+    <button id="again">Посмотреть ещё раз</button>
+    <div class="small">Сделано с теплом ♡</div>
+  </div>
+</section></main>
+<script>
+const intro=document.getElementById('intro'), letter=document.getElementById('letter'), env=document.getElementById('env');
+function openLetter(){env.classList.add('open');setTimeout(()=>{intro.style.display='none';letter.style.display='block'},550)}
+document.getElementById('open').addEventListener('click',openLetter);
+env.addEventListener('click',openLetter);
+document.getElementById('again').addEventListener('click',()=>{letter.style.display='none';intro.style.display='block';env.classList.remove('open')});
+</script>
+</body></html>
