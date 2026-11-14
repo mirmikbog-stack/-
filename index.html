@@ -1,64 +1,313 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Твоё послание</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Галактика любви ❤️</title>
+
 <style>
-:root{--pink:#ff7eae;--bg:#100911;--muted:#bba9b7}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at 50% 42%,#35152d 0%,#170d19 42%,#09070b 100%);color:#f8eaf2;font-family:Georgia,serif;min-height:100vh;overflow-x:hidden}
-main{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:26px 16px;position:relative}
-main:before,main:after{content:"";position:fixed;width:260px;height:260px;border:1px solid #ff8fbd33;border-radius:50%;filter:blur(1px);animation:pulse 5s ease-in-out infinite;pointer-events:none}
-main:after{width:360px;height:360px;animation-delay:1.5s}
-@keyframes pulse{0%,100%{transform:scale(.8);opacity:.1}50%{transform:scale(1.2);opacity:.55}}
-.card{width:min(420px,100%);text-align:center;position:relative;z-index:1}
-.eyebrow{font:11px Arial,sans-serif;letter-spacing:4px;color:#d8a8c4;text-transform:uppercase;margin-bottom:28px}
-.envelope{width:180px;height:118px;margin:0 auto 25px;position:relative;background:linear-gradient(145deg,#fff0f5,#d9c5d0);border-radius:8px;box-shadow:0 12px 45px #ff8ab544;cursor:pointer;transition:.5s}
-.envelope:before{content:"";position:absolute;inset:0;background:linear-gradient(35deg,transparent 49%,#c5aab9 50%,transparent 51%),linear-gradient(-35deg,transparent 49%,#d0b6c4 50%,transparent 51%);border-radius:8px}
-.flap{position:absolute;top:0;left:0;width:0;height:0;border-left:90px solid transparent;border-right:90px solid transparent;border-top:70px solid #f7e6ee;transform-origin:top;transition:.7s;z-index:2}
-.seal{position:absolute;z-index:3;left:50%;top:48px;transform:translateX(-50%);width:27px;height:27px;border-radius:50%;background:#c94d79;box-shadow:0 0 16px #ff7eae99}
-.seal:after{content:"♥";font:14px Arial;color:#ffe6ef;position:absolute;left:7px;top:6px}
-.envelope.open .flap{transform:rotateX(180deg);opacity:.25}
-h1{font-size:27px;font-weight:normal;margin:0 0 12px}
-p{color:#d5c0ce;line-height:1.65;font-size:15px}
-button,.linkbtn{border:0;border-radius:30px;padding:13px 26px;background:linear-gradient(90deg,#ff8ab5,#e85c99);color:#35101f;font-weight:bold;letter-spacing:.3px;box-shadow:0 5px 25px #ff75a855;cursor:pointer;text-decoration:none;display:inline-block;margin:10px 5px}
-button:active{transform:scale(.98)}
-#letter{display:none;animation:rise .9s ease both}
-@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
-.portrait-wrap{width: min(270px,78vw);height:340px;margin:24px auto 18px;position:relative;overflow:hidden;border-radius:7px;box-shadow:0 0 35px #ff83b344}
-.portrait-wrap img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.15) brightness(.82);display:block}
-.portrait-wrap:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,#fff0 0 3px,#fff2 4px 5px);mix-blend-mode:screen;pointer-events:none}
-.caption{font-style:italic;color:#f4c8dc;font-size:20px;margin:14px 0 5px}
-.small{font:11px Arial,sans-serif;color:#a78c9e;letter-spacing:1px}
-#stars{position:fixed;inset:0;pointer-events:none;opacity:.6;background-image:radial-gradient(#fff 1px,transparent 1px),radial-gradient(#f6a9d0 1px,transparent 1px);background-size:83px 83px,127px 127px;background-position:0 0,30px 40px}
-.hidden{display:none}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #03020b;
+    overflow: hidden;
+    font-family: Georgia, serif;
+    color: white;
+}
+
+canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.title {
+    position: fixed;
+    top: 35px;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+    color: #ffd5ed;
+    font-size: 25px;
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px #ff55b7;
+}
+
+.subtitle {
+    position: fixed;
+    bottom: 55px;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+    color: #ffc9e8;
+    font-size: 19px;
+    text-shadow: 0 0 15px #ff4caa;
+    padding: 0 15px;
+}
+
 </style>
 </head>
+
 <body>
-<div id="stars"></div>
-<main><section class="card">
-  <div id="intro">
-    <div class="eyebrow">маленькое послание</div>
-    <div class="envelope" id="env" aria-label="Конверт"><div class="flap"></div><div class="seal"></div></div>
-    <h1>Для тебя</h1>
-    <p>Здесь спрятано кое-что особенное.<br>Нажми, чтобы открыть.</p>
-    <button id="open">Открыть письмо</button>
-  </div>
-  <div id="letter">
-    <div class="eyebrow">это послание для тебя</div>
-    <div class="portrait-wrap"><img src="portrait.jpg" alt="Фотография"></div>
-    <div class="caption">Ты — особенный человек</div>
-    <p>Пусть у тебя будет больше светлых моментов,<br>искренних улыбок и причин радоваться каждому дню.</p>
-    <button id="again">Посмотреть ещё раз</button>
-    <div class="small">Сделано с теплом ♡</div>
-  </div>
-</section></main>
+
+<div class="title">∞ ТЫ — МОЯ ВСЕЛЕННАЯ ∞</div>
+
+<canvas id="galaxy"></canvas>
+
+<div class="subtitle">
+    Я люблю тебя на всех языках мира ❤️
+</div>
+
 <script>
-const intro=document.getElementById('intro'), letter=document.getElementById('letter'), env=document.getElementById('env');
-function openLetter(){env.classList.add('open');setTimeout(()=>{intro.style.display='none';letter.style.display='block'},550)}
-document.getElementById('open').addEventListener('click',openLetter);
-env.addEventListener('click',openLetter);
-document.getElementById('again').addEventListener('click',()=>{letter.style.display='none';intro.style.display='block';env.classList.remove('open')});
+
+const canvas = document.getElementById("galaxy");
+const ctx = canvas.getContext("2d");
+
+let w, h;
+
+function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+}
+
+resize();
+window.addEventListener("resize", resize);
+
+const phrases = [
+"Я тебя люблю",
+"I love you",
+"Je t'aime",
+"Te amo",
+"Ti amo",
+"Ich liebe dich",
+"Eu te amo",
+"愛してる",
+"사랑해",
+"我爱你",
+"Я цябе кахаю",
+"Я тебе кохаю",
+"Я тебя обожаю",
+"أحبك",
+"אני אוהב אותך",
+"Σ' αγαπώ",
+"Seni seviyorum",
+"Ik hou van jou",
+"Jag älskar dig",
+"Jeg elsker deg",
+"Rakastan sinua",
+"Es tevi mīlu",
+"Ma armastan sind",
+"Volim te",
+"Te iubesc",
+"Kocham cię",
+"Miluji tě",
+"Ľúbim ťa",
+"Ég elska þig",
+"愛してるよ",
+"Ngiyakuthanda",
+"Mi amas vin",
+"Main tumse pyaar karta hoon",
+"আমি তোমাকে ভালোবাসি",
+"நான் உன்னை காதலிக்கிறேன்",
+"ฉันรักคุณ",
+"Tôi yêu bạn",
+"Anh yêu em",
+"Mahal kita",
+"Aku cinta kamu",
+"دوستت دارم",
+"אני אוהב אותך",
+"אני אוהבת אותך",
+"Te quiero",
+"Aš tave myliu",
+"Ik hâld fan dy",
+"Mo nifẹ rẹ",
+"Ke a go rata",
+"Ti tengu caru",
+"Ya tebya lyublyu",
+"Love you forever",
+"Mon amour",
+"Mi amor",
+"Моя любовь",
+"Forever yours"
+];
+
+const colors = [
+"#ff9bd2",
+"#ffd6f0",
+"#d9a7ff",
+"#ffffff",
+"#ffb5e8",
+"#c9b6ff"
+];
+
+let stars = [];
+let words = [];
+
+const cx = () => w / 2;
+const cy = () => h / 2;
+
+function createGalaxy() {
+
+    words = [];
+    stars = [];
+
+    const count = 750;
+    const maxRadius = Math.min(w, h) * 0.48;
+
+    for (let i = 0; i < count; i++) {
+
+        let arm = Math.floor(Math.random() * 4);
+
+        let distance = Math.random() * maxRadius;
+
+        let angle =
+            arm * Math.PI / 2 +
+            distance * 0.035 +
+            (Math.random() - 0.5) * 1.1;
+
+        let spread = 0.12 + distance * 0.10;
+
+        let x = Math.cos(angle) * distance +
+            (Math.random() - 0.5) * spread * 100;
+
+        let y = Math.sin(angle) * distance * 0.62 +
+            (Math.random() - 0.5) * spread * 100;
+
+        words.push({
+            x: x,
+            y: y,
+            text: phrases[Math.floor(Math.random() * phrases.length)],
+            size: Math.random() * 7 + 5,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: Math.random() * 0.8 + 0.2,
+            phase: Math.random() * 6.28
+        });
+    }
+
+    for (let i = 0; i < 300; i++) {
+        stars.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            size: Math.random() * 1.8,
+            alpha: Math.random(),
+            phase: Math.random() * 6.28
+        });
+    }
+}
+
+createGalaxy();
+
+function animate(time) {
+
+    ctx.clearRect(0, 0, w, h);
+
+    const centerX = cx();
+    const centerY = cy();
+
+    // Космическое свечение
+
+    let glow = ctx.createRadialGradient(
+        centerX, centerY, 0,
+        centerX, centerY, Math.min(w, h) * 0.55
+    );
+
+    glow.addColorStop(0, "rgba(255,90,190,0.18)");
+    glow.addColorStop(0.35, "rgba(120,50,180,0.12)");
+    glow.addColorStop(1, "rgba(0,0,0,0)");
+
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, w, h);
+
+    // Звёзды на фоне
+
+    stars.forEach(star => {
+
+        let twinkle =
+            0.3 + Math.sin(time * 0.001 + star.phase) * 0.5;
+
+        ctx.globalAlpha = Math.max(0.1, twinkle);
+
+        ctx.fillStyle = "white";
+
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fill();
+    });
+
+    // Галактика из надписей
+
+    ctx.save();
+
+    ctx.translate(centerX, centerY);
+
+    ctx.rotate(time * 0.000025);
+
+    words.forEach(word => {
+
+        let pulse =
+            0.55 + Math.sin(time * 0.0015 + word.phase) * 0.35;
+
+        ctx.globalAlpha = word.alpha * pulse;
+
+        ctx.fillStyle = word.color;
+
+        ctx.font = `bold ${word.size}px Georgia`;
+
+        ctx.textAlign = "center";
+
+        ctx.shadowBlur = 9;
+        ctx.shadowColor = word.color;
+
+        ctx.fillText(
+            word.text,
+            word.x,
+            word.y
+        );
+
+    });
+
+    ctx.restore();
+
+    // Яркое сердце в центре
+
+    ctx.globalAlpha = 1;
+
+    let heartGlow = ctx.createRadialGradient(
+        centerX, centerY, 0,
+        centerX, centerY, 65
+    );
+
+    heartGlow.addColorStop(0, "rgba(255,220,245,0.9)");
+    heartGlow.addColorStop(0.3, "rgba(255,90,180,0.35)");
+    heartGlow.addColorStop(1, "rgba(255,50,150,0)");
+
+    ctx.fillStyle = heartGlow;
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 65, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.font = "38px Arial";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#ffb5e8";
+    ctx.shadowBlur = 25;
+    ctx.shadowColor = "#ff43a5";
+
+    ctx.fillText("♥", centerX, centerY + 13);
+
+    ctx.shadowBlur = 0;
+
+    requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+
 </script>
-</body></html>
+
+</body>
+</html>
